@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct ThresholdApp: App {
+    @ObservedObject private var data = WorkoutData()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                WorkoutsView(workouts: $data.workouts) {
+                    data.save()
+                }
+            }
+            .onAppear {
+                data.load()
+            }
         }
     }
 }
